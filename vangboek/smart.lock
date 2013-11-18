@@ -1,0 +1,33 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "iron-router": {},
+      "bootstrap-3": {},
+      "roles": {},
+      "simple-i18n": {}
+    },
+    "packages": {
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.6.1",
+        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
+      },
+      "bootstrap-3": {
+        "git": "https://github.com/mangasocial/meteor-bootstrap-3.git",
+        "tag": "v0.3.6",
+        "commit": "711dbcabe333c8714298b2fd1de97fdcdae6efa7"
+      },
+      "roles": {
+        "git": "https://github.com/alanning/meteor-roles.git",
+        "tag": "v1.0.6",
+        "commit": "f81cbf7c765a4ed7e16a580c288db6f10a90856b"
+      },
+      "simple-i18n": {
+        "git": "https://github.com/txgruppi/meteor-simple-i18n.git",
+        "tag": "v0.3.1",
+        "commit": "6335cdaa9de4e3eeab7ca59101ccf210528a0b5b"
+      }
+    }
+  }
+}

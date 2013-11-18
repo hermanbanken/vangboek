@@ -1,0 +1,8 @@
+{
+  "packages": {
+    "iron-router": {},
+    "bootstrap-3": {},
+    "roles": {},
+    "simple-i18n": {}
+  }
+}
