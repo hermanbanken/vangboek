@@ -26,4 +26,9 @@
         }
       }, false);
   });
+  
+  Handlebars.registerHelper('datef', function(date, format){
+    return moment(date).format(format);
+  });
+  
 })();
