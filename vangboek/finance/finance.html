@@ -1,0 +1,17 @@
+<template name="bills">
+  <div class="table-wrap">
+      <table class="table table-striped table-hover">
+          <thead><tr><th>Datum</th><th>&Delta; Saldo</th><th>Type</th><th>Opmerking</th></tr></thead>
+          <tbody>{{#each bills}}
+            <tr>
+              <td>{{date}}</td>
+              <td>{{changeFor ..}}</td>
+              <td>{{type}}</td>
+              <td>{{note}}</td>
+            </tr>
+            {{else}}
+            <tr><td colspan=4 class=cap>{{t 'no entries yet'}}</tr>
+          {{/each}}</tbody>
+      </table>
+  </div>
+</template>

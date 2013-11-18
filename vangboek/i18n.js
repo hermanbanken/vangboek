@@ -5,12 +5,15 @@
 var i18n = Meteor.I18n({'collectionName': 'i18n', 'defaultLang': 'nl'});
 
 var translations = {
-  "user" : { nl: 'gebruiker', en: 'user' },
-  "users" : { nl: 'gebruikers', en: 'users' },
-  "realname" : { nl: 'naam', en: "name" },
-  "nickname" : { nl: 'gebruikersnaam', en: 'username' },
-  "email": { nl: 'e-mail', en: 'email' },
-  "roles": { nl: 'rollen', en: 'roles' },
+  "user" : { nl: 'gebruiker', en: 'user', oc: 'maat' },
+  "users" : { nl: 'gebruikers', en: 'users', oc: 'maats' },
+  "realname" : { nl: 'naam', en: "name", oc: 'naam' },
+  "nickname" : { nl: 'gebruikersnaam', en: 'username', oc: 'armennaam' },
+  "email": { nl: 'e-mail', en: 'email', oc: 'e-mail' },
+  "roles": { nl: 'rollen', en: 'roles', oc: 'rollen' },
+  "liquidity over time": { nl: 'liquiditeitsverloop', oc: 'standverloop' },
+  "bills": { nl: 'mutaties', oc: 'mutaties' },
+  "no entries yet": { nl: 'nog geen data', oc: 'nog geen data' },
 };
 
 Meteor.startup(function(){

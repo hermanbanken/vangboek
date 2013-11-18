@@ -15,7 +15,7 @@
               <tr class='line-md'>
                 <td><img class='icon-md img-circle' src="{{userServiceField services "picture"}}" /></td>
                 <td><a href="{{pathFor 'userShow'}}">{{profile.name}}</a></td>
-                <td>{{profile.nick}}</td>
+                <td>{{profile.nickname}}</td>
                 <td>{{userServiceField services "email"}}</td>
                 <td>{{#each roles}}{{this}} {{/each}}</td>
               </tr>
@@ -27,18 +27,40 @@
 </template>
 
 <template name="user">
+  {{#with model}}
   <div class="container">
     <div class="row">
       <div class="col-lg-4">
-        {{#with model}}
+        {{#if canEdit 'user'}}
+        <form role="form">
+          <h2>{{profile.name}}</h2>
+          <div><img class='icon-lg img-circle' src="{{userServiceField services 'picture'}}" /></div>
+          {{#if canEdit 'groups'}}
+            <label class='block'>Groups: {{>tags}}</label>
+          {{/if}}
+          {{#if canEdit 'roles'}}
+          <label class='block'>Rights: {{>tags}}</label>
+          {{/if}}
+          <div class="form-group">
+              <label for="nickname" class='cap'>{{t 'nickname'}}</label>
+              <input type="text" class="form-control" name="nickname" id="nickname" placeholder="Nickname" value="{{profile.nickname}}">
+          </div>
+          <button type="submit" class="btn btn-default pull-right">Save</button>
+        </form>
+        {{else}}
         <h2>{{profile.name}}</h2>
-        <img class='icon-lg img-circle' src="{{userServiceField services 'picture'}}" />
-        {{>tags}}
-        {{/with}}
+        <div><img class='icon-lg img-circle' src="{{userServiceField services 'picture'}}" /></div>
+        {{/if}}
       </div>
-      
+      <div class="col-lg-8">
+        <h3>{{t 'liquidity over time'}}</h3>
+        <p>{{t 'liquidity over time'}}</p>
+        <h3>{{t 'bills'}}</h3>
+        {{>bills model}}
+      </div>
     </div>
   </div>
+  {{/with}}
 </template>
 
 <template name="userEdit">

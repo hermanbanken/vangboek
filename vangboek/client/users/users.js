@@ -9,12 +9,22 @@ Template.user.model = function(){
   return user;
 };
 
+Template.user.events = {
+  "submit": function(e, template){
+    var form = $(template.find("form"));
+    var updates = form.serializeObject();
+    Meteor.users.update(this._id, {$set: {"profile.nickname": updates.nickname}});
+    e.preventDefault();
+    return false;
+  }
+};
+
 Router.map(function(){
   
   this.route('users', {
     path: '/users',
     inMenu: true,
-    title: "Users",
+    title: "users",
     order: 10
   })
   
@@ -23,8 +33,36 @@ Router.map(function(){
     template: 'user',
 
     yieldTemplates: {
-      'userEdit': {to: 'overlay'}
+      //'userEdit': {to: 'overlay'}
     }
   })
 	
 });
+
+Handlebars.registerHelper("canEdit", function(scope){
+  if(scope == 'user' && this._id === Meteor.user()._id) 
+    return true;
+  if(scope == 'rights' && Roles.userIsInRole(Meteor.user()._id, ['admin'])) 
+    return true;
+  if(scope == 'groups' && Roles.userIsInRole(Meteor.user()._id, ['admin'])) 
+    return true;
+  console.log("canEdit", this, arguments);
+  return false;
+});
+
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
