@@ -1,0 +1,38 @@
+.tags-ui {
+  display: block;
+  border: 1px solid gray;
+  box-sizing: border-box;
+  padding: 4px;
+  line-height: 1.6em;
+  
+  .tag, textarea { display: inline-block; }
+  .tag {
+    line-height: 1.2em;
+    margin: .1em 0;
+    box-sizing: border-box;
+    padding: 0px 4px;
+    border: .1em solid #aaa;
+    background: #ddd;
+    border-radius: 2px;
+    .remove { font-size: .6em; vertical-align: middle; }
+  }
+  textarea, textarea:focus, textarea:active, textarea:hover { 
+    border: none;
+    resize: none;
+    outline:0px !important;
+    -webkit-appearance: none;
+    padding: 0;
+    background: transparent;
+  }
+  .cursor { position: relative; display: inline-block; }
+  
+  .suggest { 
+    position: absolute;
+    margin-top: 10px;
+    border: 1px solid #aaa;
+    display: none;
+   }
+   textarea:not(:empty) + .suggest {
+     display: block;
+   }
+}

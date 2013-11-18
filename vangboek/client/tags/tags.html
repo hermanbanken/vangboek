@@ -1,0 +1,21 @@
+<template name="tags">
+  <div class='tags-ui'>
+  {{#each selected}}
+  <div class='tag'>
+    <span>{{title}}</span>
+    <span class='remove'>X</span>
+    <input type='hidden' name='{{../name}}' value='{{value}}' />
+  </div>
+  {{/each}}
+  <div class='cursor'>
+    <textarea rows='1' class='type'>{{typing}}</textarea>
+    {{#if typing}}
+    <div class='suggest {{displaySuggest}}'>
+      {{#each suggest}}
+        <div class='suggestion' data-value='{{value}}' data-source='{{../suggest}}'>{{title}}</div>
+      {{/each}}
+    </div>
+    {{/if}}
+  </div>
+  </div>
+</template>
