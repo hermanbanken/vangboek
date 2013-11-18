@@ -1,0 +1,31 @@
+/* CSS declarations go here */
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 50px;
+}
+
+h1, h2, h3, h4, h5, h6, p, th {
+  &:first-letter { text-transform: capitalize; }
+}
+
+.navbar {
+  .login { @media (min-width: 768px){ margin-bottom: 0; margin-top: 12px }}
+}
+
+.table-wrap {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    & > table { width: 100%; margin: 0; }
+    border: 1px solid #ddd;
+    min-height: 2em;
+    max-height: 500px;
+}
+
+.line-md, table > tbody > .line-md > td { line-height: 32px; }
+.icon-md { height: 32px; }
+.icon-lg { height: 64px; }
