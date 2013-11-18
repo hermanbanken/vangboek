@@ -14,10 +14,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li class="{{routeClass 'home'}}"><a href="{{pathFor 'home'}}">Overview</a></li>
-        <li class="{{routeClass 'users' 'userShow'}}"><a href="{{pathFor 'users'}}">Users</a></li>
-        <li><a href="#">Aanwezigheid</a></li>
-        <li class="{{routeClass 'admin'}}"><a href="{{pathFor 'admin'}}">Admin</a></li>
+        {{#each menuItems}}
+        <li class="{{routeClass path}}">
+          <a href="{{pathFor name}}">{{options.title}}</a>
+        </li>
+        {{/each}}
       </ul>
       <div class="navbar-right navbar-text login">
         {{loginButtons}} 
