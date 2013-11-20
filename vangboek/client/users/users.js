@@ -36,7 +36,10 @@ Router.map(function(){
       //'userEdit': {to: 'overlay'}
     }
   })
-	
+});
+
+Handlebars.registerHelper("allUsers", function(){
+  return Meteor.users.find({});
 });
 
 Handlebars.registerHelper("canEdit", function(scope){
@@ -48,6 +51,12 @@ Handlebars.registerHelper("canEdit", function(scope){
     return true;
   console.log("canEdit", this, arguments);
   return false;
+});
+
+Handlebars.registerHelper("userServiceField", function(services, field, otherwise){
+  return _.chain(services).map(function(service, key){
+    return service[field];
+  }).first().value() || typeof(otherwise) == 'string' && otherwise || "";
 });
 
 $.fn.serializeObject = function()

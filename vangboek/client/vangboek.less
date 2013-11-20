@@ -26,11 +26,33 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
     max-height: 500px;
 }
 
-.line-md, table > tbody > .line-md > td { line-height: 32px; }
-.icon-md { height: 32px; }
-.icon-lg { height: 64px; }
+@size-md: 32px; @size-lg: 64px;
+.line-md, table > tbody > .line-md > td { line-height: @size-md; }
+.icon-md { height: @size-md; }
+.icon-lg { height: @size-lg; }
 
 .block { display: block; }
+
+.changes {
+  list-style: none;
+  overflow: hidden;
+  
+  .change { 
+    float: left;
+    div.name, input { 
+      display: block; 
+      height: 1.6em; 
+      width: @size-lg;
+      text-align: center;
+    }
+    div.name {
+      overflow: hidden;
+    }
+    input:before {
+      content: "&euro;";
+    }
+  }
+}
 
 @navbar-border: #e7e7e7;
 @navbar-bg: #f8f8f8;

@@ -1,15 +1,3 @@
-var bills = new Meteor.Collection("bills", {transform: function(doc){
-  doc;
-  if(doc.note && !doc.title) doc.title = doc.note;
-  doc.changeFor = function(user){
-    return _.reduce(this.users.map(function(u){
-      console.log(u, user);
-      return u.userId == user || u.userId == user._id ? u.change : 0;
-    }), function(sum, item){ return sum + item }, 0);
-  };
-  return doc;
-}});
-
 /*Meteor.publish("liquidity", function(userId){
   var billsForUser = bills.find({users: {
       $elemMatch: {
@@ -35,21 +23,23 @@ Meteor.startup(function(){
 
 if(Meteor.isClient){
   Template.bills.bills = function(){
-    if(this._id)
-    return bills.find({users: {
-      $elemMatch: {
-        'userId': this._id
-      }
-    }});
+    if(this._id){
+      var ids = Changes.find({userId: this._id}, {fields: { billId: 1 }}).fetch();
+      return Bills.find({_id: { $in: _.pluck(ids, "billId") }});
+    }
     else
-    return bills.find();
+    return Bills.find();
   }
   
   Template.bill.model = function(){
-    var bill = bills.findOne({
+    var bill = Bills.findOne({
       _id: Router.current().params._id
     });
     return bill;
+  }
+  
+  Template.bill.allUsersWithChanges = function(){
+    
   }
 }
 

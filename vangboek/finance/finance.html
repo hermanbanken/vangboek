@@ -11,7 +11,7 @@
           <tbody>{{#each bills}}
             <tr>
               <td><a href="{{pathFor 'billShow'}}">{{datef date 'll'}}</a></td>
-              <td>{{#if ../_id}}{{changeFor ../..}}{{else}}{{change}}{{/if}}</td>
+              <td>{{#if ../_id}}{{sumFor ../..}}{{else}}{{change}}{{/if}}</td>
               <td>{{type}}</td>
               <td>{{title}}</td>
               {{#unless ../_id}}<td>{{users}}</td>{{/unless}}
@@ -25,7 +25,7 @@
 
 <template name="billPage">
   <div class="container">
-    <div class="row"><div class="col-lg-12">
+    <div class="row"><div class="col-sm-12">
       <h2>{{t 'bills'}}</h2>
       {{>bills}}
     </div></div>
@@ -35,7 +35,7 @@
 <template name="bill">
   {{#with model}}
   <div class="container">
-    <div class="row"><div class="col-lg-4">
+    <div class="row"><div class="col-sm-4">
       <h2>{{t 'bill'}} {{title}}</h2>
       <form role="form">
         <div class="form-group">
@@ -57,14 +57,44 @@
         <button type="submit" class="btn btn-default">Save</button>
       </form>
       <label>
-    </div><div class="col-lg-8">
-      <h2>Users</h2>
-      {{#each users}}
-      {{userId}} - {{change}}<br>
-      {{else}}
-      No users yet
-      {{/each}}
+    </div><div class="col-sm-8">
+      {{#groupBy changes 'type'}}
+        <h2>{{t group}}</h2>
+        <ul class='changes changes-type-{{group}}'>{{#each list}}
+          <li class='change'>{{>change}}</li>
+        {{/each}}</ul>
+        {{else}}
+        <p>{{t 'Er zijn geen splitsingen gedefinieerd'}}</p>
+      {{/groupBy}}
     </div></div>
   </div>
   {{/with}}
 </template>
+
+<template name="change">
+  <div class='name'>{{user.profile.name}}</div>
+  <img src="{{userServiceField user.services 'picture' 'http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536'}}" class='icon-lg' />
+  <input type="hidden" name="change[{{_id}}].userId" value="{{userId}}" />
+  <input type="hidden" name="change[{{_id}}].type" value="{{type}}" />
+  <input type="hidden" name="change[{{_id}}].note" value="{{note}}" />
+  <input type="text" name="change[{{_id}}].change" value="{{change}}" />       
+</template>
+
+<!-- {{!--<h2>Users</h2>
+      {{#each allUsers}}
+        <div class='user'>
+          <img src="{{userServiceField services 'picture'}}" class='icon-lg img-circle'>
+          {{#each changesFor this}}
+          <input type="text" name="users[{{../_id}}][].change" value="{{change}}" />
+          <input type="text" name="users[{{../_id}}][].note" value="{{note}}" />
+          {{/each}}
+          <div>{{_id}} - {{profile.name}} - {{selected}} - {{context}}</div>
+        </div>
+      {{/each}}
+      --}}
+  
+      {{#each users}}
+       <span>{{userId}} - {{change}}</span><br>
+      {{else}}
+      No users yet
+      {{/each}} -->
