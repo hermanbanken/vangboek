@@ -36,9 +36,12 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
 .changes {
   list-style: none;
   overflow: hidden;
+  padding: 0;
   
   .change { 
     float: left;
+    margin-right: 5px;
+    
     div.name, input { 
       display: block; 
       height: 1.6em; 
@@ -50,6 +53,48 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
     }
     input:before {
       content: "&euro;";
+    }
+    div.img {
+      position: relative;
+      .btn {
+        display: none;
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        background: black;
+        padding: 2px;
+        width: 20px;
+        height: 20px;
+        line-height: 1em;
+        text-decoration: none;
+        color: white;
+        border-radius: 0;
+        &[data-action=down] { left: 0; right: auto; }
+      }
+      &:hover .btn { display: block; }
+    }
+  }
+  
+  .add { 
+    float: left;
+    position: relative;
+    > span, input, input:focus, input:visited, input:hover {
+      line-height: 1.3em;
+      border: none;
+      vertical-align: middle;
+      padding: 30px 10px;
+      display: inline-block;
+      -webkit-appearance: none;
+      outline: none;
+      z-index: 1;
+      background: transparent;
+    }
+    .is-typeahead { color: gray; margin-left: 1px; }
+    input.has-typeahead {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 10;
     }
   }
 }

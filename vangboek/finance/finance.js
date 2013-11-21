@@ -32,15 +32,33 @@ if(Meteor.isClient){
   }
   
   Template.bill.model = function(){
-    var bill = Bills.findOne({
+    return Bills.findOne({
       _id: Router.current().params._id
     });
-    return bill;
+  }
+  Template.bill.changes = function(){
+    return Changes.find({
+      billId: Router.current().params._id
+    });
   }
   
   Template.bill.allUsersWithChanges = function(){
     
   }
+  
+  Template.bill.events = {
+    "keyup .changes .add": function(e, template){
+      // If comma or enter: add user to list
+    }
+  };
+  
+  Template.change.events = {
+    "change input": function(e){
+      var changes = {};
+      changes[e.target.name.split(".").pop()] = parseFloat(e.target.value);
+      Changes.update({_id: this._id}, {$set: changes});
+    }
+  };
 }
 
 Router.map(function(){
