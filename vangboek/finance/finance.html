@@ -67,7 +67,10 @@
             <li class='change'>{{>change}}</li>
           {{/each}}
           {{#constant}}
-            <li class='add'><input type="text" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" /></li>
+            <li class='add'>
+              <input type="text" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="{{group}}" />
+              {{{suggest 'profile.name' group allUsers}}}
+            </li>
           {{/constant}}
         </ul>
         {{else}}

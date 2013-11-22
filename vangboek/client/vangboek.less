@@ -77,25 +77,23 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
   
   .add { 
     float: left;
-    position: relative;
-    > span, input, input:focus, input:visited, input:hover {
-      line-height: 1.3em;
+    border: 2px dashed gray;
+    width: 150px;
+    border-radius: 10px;
+    margin-top: 1.5em;
+    
+    input, input:focus, input:visited, input:hover {
+      display: block;
+      height: 60px;
       border: none;
-      vertical-align: middle;
-      padding: 30px 10px;
-      display: inline-block;
+      box-sizing: border-box;
+      padding: 10px;
       -webkit-appearance: none;
       outline: none;
-      z-index: 1;
       background: transparent;
     }
+
     .is-typeahead { color: gray; margin-left: 1px; }
-    input.has-typeahead {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 10;
-    }
   }
 }
 

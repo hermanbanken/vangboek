@@ -37,45 +37,6 @@ Bill.prototype = {
   },
 };
 
-/* Mimic Meteor's idStringify function */
-/* @see: https://github.com/meteor/meteor/blob/00884756993234ce3d42f24170f06d58d9682e0f/packages/handlebars/evaluate-handlebars.js#L43-L61 */
-var idStringify = Package.minimongo
-  ? Package.minimongo.LocalCollection._idStringify
-  : function (id) { return id; };
-
-if(Meteor.isClient)
-/* Mimic Meteor's each helper */
-/* @see: https://github.com/meteor/meteor/blob/00884756993234ce3d42f24170f06d58d9682e0f/packages/handlebars/evaluate-handlebars.js#L43-L61 */
-Handlebars.registerHelper('groupBy', function(data, groupKey, options){
-  var parentData = this;
-  if(typeof groupKey != 'string') {
-    options = groupKey;
-    groupKey = "type";
-  }
-  
-  if (data.fetch) data = data.fetch();
-  
-  if (data && data.length > 0)
-    return _.chain(data).groupBy(groupKey).map(function(list, groupId) {
-      // infer a branch key from the grouping parameter
-      var branch = "branch." + groupId;
-      return Spark.labelBranch(branch, function(){
-        return options.fn({ group: groupId, list: list });
-      });
-    }).value().join('');
-  else
-    return Spark.labelBranch(
-      'else',
-      function () {
-        return options.inverse(parentData);
-      });
-});
-
-if(Meteor.isClient)
-Handlebars.registerHelper('stringify', function(arg){
-  return JSON.stringify(arg);
-});
-
 Change = function (doc){
   _.extend(this, {
     change: 0,

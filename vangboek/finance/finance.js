@@ -48,8 +48,15 @@ if(Meteor.isClient){
   
   Template.bill.events = {
     "keyup .changes .add": function(e, template){
+      Session.set(e.target.getAttribute("data-typeahead"), e.target.value);
       // If comma or enter: add user to list
-    }
+    },
+    "focus .changes .change input": function(e){
+      $(e.target).closest(".change").addClass("selected");
+    },
+    "blur .changes .change input": function(e){
+      $(e.target).closest(".change").removeClass("selected");
+    },
   };
   
   Template.change.events = {

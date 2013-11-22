@@ -39,7 +39,7 @@ Router.map(function(){
 });
 
 Handlebars.registerHelper("allUsers", function(){
-  return Meteor.users.find({});
+  return Meteor.users;
 });
 
 Handlebars.registerHelper("canEdit", function(scope){
