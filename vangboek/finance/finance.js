@@ -47,6 +47,25 @@ if(Meteor.isClient){
   }
   
   Template.bill.events = {
+    "click .btn": function(e, template){
+      if($(e.target).attr("data-action") == 'remove'){
+        var a = window.confirm("Sure?");
+        if(a){
+          Bills.remove({_id: this._id});
+          Router.go('bills');
+        }
+      } else if(e.target.type == 'submit'){
+        e.preventDefault();
+        var data = {$set: {
+          note: template.find("#note").value,
+          change: parseInt(template.find("#change").value),
+          date: new Date(template.find("#date").value),
+          type: template.find("#type").value,
+          created: this.created || new Date()
+        }};
+        Bills.upsert({_id: this._id}, data);
+      }
+    },
   };
   
   Template.changeslist.events = {
