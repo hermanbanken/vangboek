@@ -150,6 +150,18 @@ Router.map(function(){
     order: 11
   })
   
+  this.route('billNew', {
+    path: '/bills/new',
+    template: 'bill',
+    
+    before: function(){
+      Router.go("billShow", {_id: Bills.insert({
+        note: "",
+        created: new Date(),
+      })});
+    }
+  })
+  
   this.route('billShow', {
     path: '/bills/:_id',
     template: 'bill',
@@ -158,5 +170,5 @@ Router.map(function(){
       //'userEdit': {to: 'overlay'}
     }
   })
-	
+  
 });

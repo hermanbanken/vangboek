@@ -26,7 +26,7 @@
 <template name="billPage">
   <div class="container">
     <div class="row"><div class="col-sm-12">
-      <h2>{{t 'bills'}}</h2>
+      <h2>{{t 'bills'}} <small><a href="{{pathFor 'billNew'}}">{{t 'add new'}}</a></small></h2>
       {{>bills}}
     </div></div>
   </div>
