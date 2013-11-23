@@ -1,7 +1,7 @@
 <template name="suggest">
-  <ul>
+  <ul class='suggestions'>
     {{#each suggestions}}
-      <div data-id={{_id}}>{{profile.name}}</div>
+      <li data-id={{_id}}>{{profile.name}}</li>
     {{/each}}
   </ul>
 </template>

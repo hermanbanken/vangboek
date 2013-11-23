@@ -39,7 +39,7 @@
 
   /* Mimic Meteor's each helper */
   /* @see: https://github.com/meteor/meteor/blob/00884756993234ce3d42f24170f06d58d9682e0f/packages/handlebars/evaluate-handlebars.js#L43-L61 */
-  Handlebars.registerHelper('groupBy', function(data, groupKey, options){
+  Handlebars.registerHelper('groupBy', function(data, groupKey){
     var parentData = this;
     if(typeof groupKey != 'string') {
       options = groupKey;
@@ -62,6 +62,17 @@
         function () {
           return options.inverse(parentData);
         });
+  });
+  
+  Handlebars.registerHelper('extendTemplateContext', function(){
+    var arg = Array.prototype.slice.call(arguments);
+    var name = arg.shift();
+    while(arg.length){
+      var key = arg.shift(), value = arg.shift();
+      if(key && value)
+        this[key] = value;
+    }
+    return Template[name](this);
   });
 
   Handlebars.registerHelper('stringify', function(arg){

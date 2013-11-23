@@ -47,9 +47,29 @@ if(Meteor.isClient){
   }
   
   Template.bill.events = {
+  };
+  
+  Template.changeslist.events = {
+    /* Typeahead suggesting users */
     "keyup .changes .add": function(e, template){
-      Session.set(e.target.getAttribute("data-typeahead"), e.target.value);
       // If comma or enter: add user to list
+      if(e.keyCode == 188 || e.keyCode == 13){
+        var context = this,
+            ids = template.findAll(".suggestions li").map(function(li){ return li.getAttribute('data-id'); });
+        _(ids).each(function(userId){
+          Changes.insert({
+            billId: context.model._id,
+            userId: userId,
+            type: context.group,
+            change: 0,
+            amount: 1
+          })
+        });
+        Session.set(e.target.getAttribute("data-typeahead"), "");
+        e.target.value = "";
+      } else {
+        Session.set(e.target.getAttribute("data-typeahead"), e.target.value);
+      }
     },
     "focus .changes .change input": function(e){
       $(e.target).closest(".change").addClass("selected");
@@ -64,6 +84,39 @@ if(Meteor.isClient){
       var changes = {};
       changes[e.target.name.split(".").pop()] = parseFloat(e.target.value);
       Changes.update({_id: this._id}, {$set: changes});
+    },
+    /* Up count for person on bill type list */
+    "up": function(e){
+      this.amount = .5+(this.amount||0);
+      Changes.update({_id: this._id}, {$set: { amount: this.amount }});
+    },
+    /* Down count for person on bill type list, if count = 0 remove */
+    "down": function(e){
+      this.amount = (this.amount||0) - .5;
+      Changes.update({_id: this._id}, {$set: { amount: this.amount }});
+      if(this.amount <= 0){
+        $(e.target).closest("li").next().find("input[type=text]").focus();
+        Changes.remove({_id: this._id});  
+      }
+    },
+    "click [data-action]": function(e){
+      var action = e.target.getAttribute("data-action");
+      if(action == 'up'){
+        Template.change.events.up.call(this, e);
+      }
+      if(action == 'down'){
+        Template.change.events.down.call(this, e);
+      }
+    },
+    "keydown input": function(e){
+      if(e.keyCode == 109 || e.keyCode == 189){
+        Template.change.events.down.call(this, e);
+        e.preventDefault();
+      }
+      if(e.keyCode == 107 || e.keyCode == 187 && e.shiftKey){
+        Template.change.events.up.call(this, e);
+        e.preventDefault();
+      }
     }
   };
 }

@@ -61,18 +61,7 @@
     {{/with}}{{/isolate}}
     </div><div class="col-sm-8">
       {{#groupBy changes 'type'}}
-        <h2>{{t group}}</h2>
-        <ul class='changes changes-type-{{group}}'>
-          {{#each list}}
-            <li class='change'>{{>change}}</li>
-          {{/each}}
-          {{#constant}}
-            <li class='add'>
-              <input type="text" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="{{group}}" />
-              {{{suggest 'profile.name' group allUsers}}}
-            </li>
-          {{/constant}}
-        </ul>
+        {{{extendTemplateContext 'changeslist' 'model' model}}}
         {{else}}
         <p>{{t 'Er zijn geen splitsingen gedefinieerd'}}</p>
       {{/groupBy}}
@@ -80,11 +69,28 @@
   </div>
 </template>
 
+<template name="changeslist">
+  <h2>{{t group}}</h2>
+  <ul class='changes changes-type-{{group}}'>
+    {{#each list}}
+      <li class='change'>{{>change}}</li>
+    {{/each}}
+    <li class='rel left'>
+      <div class='add abs'>
+        {{#constant}}<input type="text" name="user" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="{{group}}" />{{/constant}}
+        {{{suggest 'profile.name' group allUsers}}}
+      </div>
+    </li>  
+  </ul>
+  <div class='clear'></div>
+</template>
+
 <template name="change">
   <div class='name'>{{user.profile.name}}</div>
   <div class='img'>
     <img src="{{userServiceField user.services 'picture' 'http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536'}}" class='icon-lg' />
     <a class='btn' data-action="up">+</a><a class='btn' data-action="down">-</a>
+    <span class='amount' data-amount="{{amount}}">{{amount}}x</span>
   </div>
   <input type="hidden" name="change[{{_id}}].userId" value="{{userId}}" />
   <input type="hidden" name="change[{{_id}}].type" value="{{type}}" />
