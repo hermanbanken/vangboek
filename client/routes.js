@@ -2,6 +2,7 @@ var Mutations = new Meteor.Collection("mutations");
 
 Router.configure({
 	layoutTemplate: 'layout',
+  notFoundTemplate: 'notFound'
 });
 
 Router.dep = new Deps.Dependency;
