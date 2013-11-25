@@ -46,6 +46,10 @@ Router.map(function(){
 });
 
 Handlebars.registerHelper("allUsers", function(){
+  return Meteor.users.find();
+});
+
+Handlebars.registerHelper("userCollection", function(){
   return Meteor.users;
 });
 

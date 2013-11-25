@@ -79,7 +79,7 @@
     <li class='rel left'>
       <div class='add abs'>
         {{#constant}}<input type="text" name="user" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="suggest.{{name}}" />{{/constant}}
-        {{{suggest 'profile.name' name allUsers}}}
+        {{{suggest 'profile.name' name userCollection}}}
       </div>
     </li>  
   </ul>
