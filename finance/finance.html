@@ -61,11 +61,11 @@
       </form>
     {{/isolate}}
     </div><div class="col-sm-8">
-      {{#each splits}}
-        {{{extendTemplateContext 'changeslist' 'model' model}}}
+      {{#eachBranchedBy splits 'name'}}
+        {{>changeslist}}
       {{else}}
         <p>{{t 'Er zijn geen splitsingen gedefinieerd'}}</p>
-      {{/each}}
+      {{/eachBranchedBy}}
     </div></div>
   </div>
 </template>
@@ -78,7 +78,7 @@
     {{/each}}
     <li class='rel left'>
       <div class='add abs'>
-        {{#constant}}<input type="text" name="user" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="{{group}}" />{{/constant}}
+        {{#constant}}<input type="text" name="user" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="suggest.{{name}}" />{{/constant}}
         {{{suggest 'profile.name' name allUsers}}}
       </div>
     </li>  

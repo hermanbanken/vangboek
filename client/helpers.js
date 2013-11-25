@@ -64,6 +64,34 @@
         });
   });
   
+  Handlebars.registerHelper('eachBranchedBy', function(data, branchKey, options){
+    var parentData = this;
+    if (data.fetch) data = data.fetch();
+
+    if(typeof branchKey != 'string') {
+      options = branchKey;
+      if(typeof data[0] == 'object')
+        branchKey = _.chain(data[0]).pairs().find(function(p){
+          return typeof p[1] == 'string';
+        }).value()[0] || "name";
+    }
+  
+    if (typeof branchKey == 'string' && data && data.length > 0)
+      return _.map(data, function(item) {
+        // infer a branch key from the grouping parameter
+        var branch = "branch." + item[branchKey];
+        return Spark.labelBranch(branch, function(){
+          return options.fn(item);
+        });
+      }).join('');
+    else
+      return Spark.labelBranch(
+        'else',
+        function () {
+          return options.inverse(parentData);
+        });
+  });
+  
   Handlebars.registerHelper('extendTemplateContext', function(){
     var arg = Array.prototype.slice.call(arguments);
     var name = arg.shift();
@@ -82,7 +110,7 @@
   Handlebars.registerHelper('suggest', function(field, unique, collection){
     return Template['suggest']({
       field: field,
-      key: unique,
+      key: "suggest."+unique,
       collection: collection
     });
   });

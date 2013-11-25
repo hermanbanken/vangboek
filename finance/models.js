@@ -41,12 +41,18 @@ Bill.prototype = {
   
   /* Return all splits that are defined either by Changes.type or in the splitTYpes field */
   splits: function(){
-    var c = _.chain(this.changes().fetch()).groupBy("type").value();
+    var c = _.chain(this.changes().fetch()).groupBy("type").value(),
+        self = this;
     // Wrap
     for(n in c){
       c[n] =  { name: n, list: this.changes({type: n}) };
     }
-    var t = _.groupBy(this.splitTypes || [], "name");
+    var t = _.chain(this.splitTypes || []).map(function(item){
+      if(typeof item == 'string')
+        return {name: item, list: self.changes({type: item})};
+      if(typeof item == 'object' && item.name)
+        return {name: item.name, list: self.changes({type: item.name})};
+    }).indexBy('name').value();
     return _.values(_.extend(t, c));
   },
     

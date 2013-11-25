@@ -74,7 +74,7 @@ if(Meteor.isClient){
           Changes.insert({
             billId: Router.current().data()._id,
             userId: userId,
-            type: context.group,
+            type: context.name,
             change: 0,
             amount: 1
           })
