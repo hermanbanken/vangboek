@@ -44,7 +44,7 @@ Bill.prototype = {
     var c = _.chain(this.changes().fetch()).groupBy("type").value();
     // Wrap
     for(n in c){
-      c[n] =  { name: n, list: c[n] };
+      c[n] =  { name: n, list: this.changes({type: n}) };
     }
     var t = _.groupBy(this.splitTypes || [], "name");
     return _.values(_.extend(t, c));
