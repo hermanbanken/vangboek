@@ -16,6 +16,7 @@ var translations = {
   "no entries yet": { nl: 'nog geen data', oc: 'nog geen data' },
 };
 
+if(Meteor.isServer)
 Meteor.startup(function(){
   for(var message in translations) {
     for(var lang in translations[message]){

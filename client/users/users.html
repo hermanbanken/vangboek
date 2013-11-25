@@ -11,7 +11,7 @@
                 <th>{{t 'email'}}</th>
                 <th>{{t 'roles'}}</th>
               </thead>
-              <tbody>{{#each users}}
+              <tbody>{{#each this}}
               <tr class='line-md'>
                 <td><img class='icon-md img-circle' src="{{userServiceField services "picture"}}" /></td>
                 <td><a href="{{pathFor 'userShow'}}">{{profile.name}}</a></td>
@@ -27,7 +27,6 @@
 </template>
 
 <template name="user">
-  {{#with model}}
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
@@ -56,11 +55,10 @@
         <h3>{{t 'liquidity over time'}}</h3>
         <p>{{t 'liquidity over time'}}</p>
         <h3>{{t 'bills'}}</h3>
-        {{>bills model}}
+        {{>bills bills}}
       </div>
     </div>
   </div>
-  {{/with}}
 </template>
 
 <template name="userEdit">

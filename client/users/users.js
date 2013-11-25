@@ -1,13 +1,12 @@
 Template.user.model = function(){
-  var user = Meteor.users.findOne({
+  return Meteor.users.findOne({
     _id: Router.current().params._id
   });
-  user.roles = user.roles || [];
-  user.roles.source = function(){
-    return [{title: 'Admin', value: 'admin'}, {title: 'View', value: 'view'}];
-  }
-  return user;
 };
+Template.user.bills = function(){
+  var ids = Changes.find({userId: this._id}).map(function(c){ return c.billId });
+  return Bills.find({_id: {$in: ids}});
+}
 
 Template.user.events = {
   "submit": function(e, template){
@@ -25,7 +24,11 @@ Router.map(function(){
     path: '/users',
     inMenu: true,
     title: "users",
-    order: 10
+    order: 10,
+    
+    data: function () {
+      return Meteor.users.find({});
+    },
   })
   
   this.route('userShow', {
@@ -34,7 +37,11 @@ Router.map(function(){
 
     yieldTemplates: {
       //'userEdit': {to: 'overlay'}
-    }
+    },
+    
+    data: function () {
+      return Meteor.users.findOne({_id: this.params._id});
+    },
   })
 });
 

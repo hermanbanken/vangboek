@@ -6,15 +6,17 @@
             <th>&Delta; Saldo</th>
             <th>Type</th>
             <th>Opmerking</th>
-            {{#unless _id}}<th>{{t 'users'}}</th>{{/unless}}
+            {{#unless userModel}}<th>{{t 'users'}}</th>{{/unless}}
           </tr></thead>
-          <tbody>{{#each bills}}
+          <tbody>{{#each this}}
             <tr>
               <td><a href="{{pathFor 'billShow'}}">{{datef date 'll'}}</a></td>
-              <td>{{#if ../_id}}{{sumFor ../..}}{{else}}{{change}}{{/if}}</td>
+              <td>{{#if userModel}}{{sumFor userModel}}{{else}}{{change}}{{/if}}</td>
               <td>{{type}}</td>
               <td>{{title}}</td>
-              {{#unless ../_id}}<td>{{users}}</td>{{/unless}}
+              {{#unless userModel}}<td>{{#each users}}
+                {{stringify this.profile.name}}, 
+              {{/each}}</td>{{/unless}}
             </tr>
             {{else}}
             <tr><td colspan="{{#if ../_id}}4{{else}}5{{/if}}" class=cap>{{t 'no entries yet'}}</tr>
@@ -33,10 +35,9 @@
 </template>
 
 <template name="bill">
-  
   <div class="container">
     <div class="row"><div class="col-sm-4">
-      {{#isolate}}{{#with model}}
+      {{#isolate}}
       <h2>{{t 'bill'}} {{title}}</h2>
       <form role="form">
         <div class="form-group">
@@ -58,20 +59,19 @@
         <button type="submit" class="btn btn-default">Save</button>
         <a data-action='remove' class="btn btn-danger pull-right">Delete</a>
       </form>
-      <label>
-    {{/with}}{{/isolate}}
+    {{/isolate}}
     </div><div class="col-sm-8">
-      {{#groupBy changes 'type'}}
+      {{#each splits}}
         {{{extendTemplateContext 'changeslist' 'model' model}}}
-        {{else}}
+      {{else}}
         <p>{{t 'Er zijn geen splitsingen gedefinieerd'}}</p>
-      {{/groupBy}}
+      {{/each}}
     </div></div>
   </div>
 </template>
 
 <template name="changeslist">
-  <h2>{{t group}}</h2>
+  <h2>{{t name}}</h2>
   <ul class='changes changes-type-{{group}}'>
     {{#each list}}
       <li class='change'>{{>change}}</li>
@@ -79,7 +79,7 @@
     <li class='rel left'>
       <div class='add abs'>
         {{#constant}}<input type="text" name="user" maxlength="20" class="has-typeahead" placeholder="{{t 'Add'}}" data-typeahead="{{group}}" />{{/constant}}
-        {{{suggest 'profile.name' group allUsers}}}
+        {{{suggest 'profile.name' name allUsers}}}
       </div>
     </li>  
   </ul>

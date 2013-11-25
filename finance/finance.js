@@ -22,24 +22,19 @@ Meteor.startup(function(){
 });
 
 if(Meteor.isClient){
-  Template.bills.bills = function(){
-    if(this._id){
-      var ids = Changes.find({userId: this._id}, {fields: { billId: 1 }}).fetch();
-      return Bills.find({_id: { $in: _.pluck(ids, "billId") }});
-    }
-    else
-    return Bills.find();
-  }
-  
-  Template.bill.model = function(){
-    return Bills.findOne({
-      _id: Router.current().params._id
-    });
-  }
-  Template.bill.changes = function(){
+  /*Template.bill.changes = function(){
     return Changes.find({
       billId: Router.current().params._id
     });
+  }*/
+    
+  Template.bills.userModel = function(){
+    return Router.current().template == "user" && Router.current().data();
+  }
+  
+  Template.bills.users = function(){
+    var ids = this.changes().map(function(c){return c._id});
+    return Meteor.users.find({_id: {$in: ids }});
   }
   
   Template.bill.allUsersWithChanges = function(){
@@ -63,7 +58,7 @@ if(Meteor.isClient){
           type: template.find("#type").value,
           created: this.created || new Date()
         }};
-        Bills.upsert({_id: this._id}, data);
+        Bills.update({_id: this._id}, data);
       }
     },
   };
@@ -77,7 +72,7 @@ if(Meteor.isClient){
             ids = template.findAll(".suggestions li").map(function(li){ return li.getAttribute('data-id'); });
         _(ids).each(function(userId){
           Changes.insert({
-            billId: context.model._id,
+            billId: Router.current().data()._id,
             userId: userId,
             type: context.group,
             change: 0,
@@ -147,7 +142,11 @@ Router.map(function(){
     inMenu: true,
     title: "bills",
     template: 'billPage',
-    order: 11
+    order: 11,
+    
+    data: function(){
+      return Bills.find({});
+    },
   })
   
   this.route('billNew', {
@@ -168,7 +167,11 @@ Router.map(function(){
 
     yieldTemplates: {
       //'userEdit': {to: 'overlay'}
-    }
+    },
+    
+    data: function(){
+      return Bills.findOne({_id: this.params._id});
+    },
   })
   
 });
