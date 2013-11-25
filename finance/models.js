@@ -33,7 +33,9 @@ Changes.allow({
 });
 
 Bill = function (doc){
-  _.extend(this, doc);
+  _.extend(this, {
+    splitTypes: ["computed", "static"]
+  }, doc);
 }
 
 Bill.prototype = {
