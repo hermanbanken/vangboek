@@ -37,10 +37,6 @@ if(Meteor.isClient){
     return Meteor.users.find({_id: {$in: ids }});
   }
   
-  Template.bill.allUsersWithChanges = function(){
-    
-  }
-  
   Template.bill.events = {
     "click .btn": function(e, template){
       if($(e.target).attr("data-action") == 'remove'){
