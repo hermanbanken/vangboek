@@ -169,6 +169,10 @@ Router.map(function(){
       //'userEdit': {to: 'overlay'}
     },
     
+    waitOn: function(){
+      return Meteor.subscribe('bill', this.params._id);
+    },
+    
     data: function(){
       return Bills.findOne({_id: this.params._id});
     },

@@ -91,10 +91,14 @@ Change.prototype = {
   }
 }
 
-if(Meteor.isServer)
+if(Meteor.isServer){
 Meteor.publish(null, function () {
   return [
     Bills.find(),
     Changes.find()
   ];
 });
+Meteor.publish('bill', function(id){
+  return Bills.find({_id: id});
+});
+}
