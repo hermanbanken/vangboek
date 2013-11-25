@@ -17,15 +17,6 @@ Router.map(function(){
     title: "Overview",
     order: 1,
 	});
-	
-	this.route('admin', {
-		path: '/admin',
-		template: 'admin',
-    
-    inMenu: true,
-    title: 'Admin',
-    order: 99
-	});
   
   this.route('landing', {
     path: '/',
