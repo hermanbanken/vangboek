@@ -11,7 +11,7 @@
           <tbody>{{#each this}}
             <tr>
               <td><a href="{{pathFor 'billShow'}}">{{datef date 'll'}}</a></td>
-              <td>{{#if userModel}}{{sumFor userModel}}{{else}}{{change}}{{/if}}</td>
+              <td>{{#if userModel}}{{#currency sumFor userModel}}{{/currency}}{{else}}{{currency change}}{{/if}}</td>
               <td>{{type}}</td>
               <td>{{title}}</td>
               {{#unless userModel}}<td>{{#each users}}

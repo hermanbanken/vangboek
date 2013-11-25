@@ -31,6 +31,10 @@
     return moment(date).format(format);
   });
   
+  Handlebars.registerHelper('currency', function(number){
+    return number && number.toFixed(2) || "";
+  });
+  
   /* Mimic Meteor's idStringify function */
   /* @see: https://github.com/meteor/meteor/blob/00884756993234ce3d42f24170f06d58d9682e0f/packages/handlebars/evaluate-handlebars.js#L43-L61 */
   var idStringify = Package.minimongo
