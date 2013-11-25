@@ -77,6 +77,38 @@ Bill.prototype = {
   changesByType: function(type){
     return this.changes({type: type});
   },
+  
+  /* Missing money: change - total in changes */
+  difficiency: function(){
+    var totalInChange = _.reduce(this.changes().map(function(doc){
+      return doc.change;
+    }), function(sum, i){ return sum+= i; }, 0);
+    return this.change - totalInChange;
+  },
+  
+  hasDifficiency: function(){
+    return this.difficiency() > 0.01 || this.difficiency() < -0.01;
+  },
+  
+  updateComputed: function(){
+    var changes = _.groupBy(this.changes().fetch(), function(other){
+      return other.computed ? 'computed': 'static';
+    });
+    var computedAmount = _.reduce(changes.computed, function(sum, i){
+      return sum += parseFloat(i.amount) || 1;
+    }, 0);
+    var staticTotal = -_.reduce(changes.static, function(sum, i){
+      return sum += parseFloat(i.change) || 0;
+    }, 0);
+    var costs = staticTotal + this.change;
+    
+    // Updated all Changes that have been altered
+    _.map(changes.computed || [], function(doc){
+      var c = doc.amount * costs / computedAmount;
+      if(c != doc.change)
+        Changes.update({_id: doc._id}, {$set: {change: c}});
+    });
+  }
 };
 
 Change = function (doc){
@@ -94,8 +126,37 @@ Change.prototype = {
   
   user: function(){
     return Meteor.users.findOne({ _id: this.userId });
+  },
+  bill: function(){
+    return Bills.findOne({ _id: this.billId });
   }
 }
+
+var recalc = function(doc, old){
+  var b = Bills.findOne({_id: doc.billId});
+  if(b) b.updateComputed(); 
+};
+Changes.find({computed: true}).observe({
+  added: recalc,
+  removed: recalc,
+  changed: function(doc, old){
+    if(doc.amount != old.amount) recalc(doc, old);
+  }
+});
+Changes.find({'$or': [{'computed': {'$exists': false}}, {'computed': false}]}).observe({
+  added: recalc,
+  changed: recalc,
+  removed: recalc
+});
+if(Meteor.isServer)
+Bills.find({}, {field: ['change']}).observeChanges({
+  removed: function(id){
+    Changes.remove({billId: id});
+  },
+  changed: function(id, fields){
+    Bills.findOne({_id: id}).updateComputed();
+  }
+});
 
 if(Meteor.isServer){
 Meteor.publish(null, function () {

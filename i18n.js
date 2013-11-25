@@ -14,6 +14,8 @@ var translations = {
   "liquidity over time": { nl: 'liquiditeitsverloop', oc: 'standverloop' },
   "bills": { nl: 'mutaties', oc: 'mutaties' },
   "no entries yet": { nl: 'nog geen data', oc: 'nog geen data' },
+  "computed": { nl: 'berekend', oc: 'HO' },
+  "static": { nl: 'statisch', oc: 'persoonlijk' },
 };
 
 if(Meteor.isServer)

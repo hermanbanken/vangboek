@@ -76,7 +76,8 @@ if(Meteor.isClient){
             userId: userId,
             type: context.name,
             change: 0,
-            amount: 1
+            amount: 1,
+            computed: context.name === 'computed',
           })
         });
         Session.set(e.target.getAttribute("data-typeahead"), "");
@@ -96,7 +97,9 @@ if(Meteor.isClient){
   Template.change.events = {
     "change input": function(e){
       var changes = {};
-      changes[e.target.name.split(".").pop()] = parseFloat(e.target.value);
+      // Update change value
+      var value = parseFloat(e.target.value) || 0;
+      changes[e.target.name.split(".").pop()] = value;
       Changes.update({_id: this._id}, {$set: changes});
     },
     /* Up count for person on bill type list */
@@ -123,11 +126,11 @@ if(Meteor.isClient){
       }
     },
     "keydown input": function(e){
-      if(e.keyCode == 109 || e.keyCode == 189){
+      if(this.computed && (e.keyCode == 109 || e.keyCode == 189)){
         Template.change.events.down.call(this, e);
         e.preventDefault();
       }
-      if(e.keyCode == 107 || e.keyCode == 187 && e.shiftKey){
+      if(this.computed && (e.keyCode == 107 || e.keyCode == 187 && e.shiftKey)){
         Template.change.events.up.call(this, e);
         e.preventDefault();
       }

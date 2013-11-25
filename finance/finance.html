@@ -72,7 +72,7 @@
 
 <template name="changeslist">
   <h2>{{t name}}</h2>
-  <ul class='changes changes-type-{{group}}'>
+  <ul class='changes changes-type-{{name}}'>
     {{#each list}}
       <li class='change'>{{>change}}</li>
     {{/each}}
@@ -90,13 +90,15 @@
   <div class='name'>{{user.profile.name}}</div>
   <div class='img'>
     <img src="{{userServiceField user.services 'picture' 'http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536'}}" class='icon-lg' />
-    <a class='btn' data-action="up">+</a><a class='btn' data-action="down">-</a>
-    <span class='amount' data-amount="{{amount}}">{{amount}}x</span>
+    {{#if computed}}
+      <a class='btn' data-action="up">+</a><a class='btn' data-action="down">-</a>
+      <span class='amount' data-amount="{{amount}}">{{amount}}x</span>
+    {{/if}}
   </div>
   <input type="hidden" name="change[{{_id}}].userId" value="{{userId}}" />
   <input type="hidden" name="change[{{_id}}].type" value="{{type}}" />
   <input type="hidden" name="change[{{_id}}].note" value="{{note}}" />
-  <input type="text" name="change[{{_id}}].change" value="{{change}}" />       
+  <input type="text" name="change[{{_id}}].change" value="{{currency change}}" {{#if computed}}readonly="true"{{/if}} />       
 </template>
 
 <!-- {{!--<h2>Users</h2>
