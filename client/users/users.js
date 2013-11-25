@@ -18,6 +18,43 @@ Template.user.events = {
   }
 };
 
+Template.user.rendered = function(){
+  if($('.highstock').empty() && this.data._id){
+    var changes = Changes.find({userId: this.data._id}).fetch();
+    highCharts(changes, ".highstock", this.data.profile.nickname);
+  }
+}
+
+function highCharts(changes, selector, series){
+  var stock = 0;
+  var data = _.chain(changes).groupBy("billId").map(function(changes, billId){
+    return {
+      date: Bills.findOne({_id: billId}).date.getTime(),
+      change: _.reduce(changes, function(s, i){return s+= i.change}, 0)
+    }
+  }).sortBy("date").map(function(i){
+    stock += i.change;
+    return [i.date, stock];
+  }).value();
+    
+  $(selector).highcharts('StockChart', {
+		rangeSelector : {
+			selected : 1
+		},
+    scrollbar : {
+    	enabled : false
+    },
+		series : [{
+			name : series,
+			data : data,
+      step: true,
+			tooltip: {
+				valueDecimals: 2
+			}
+		}]
+	});
+}
+
 Router.map(function(){
   
   this.route('users', {
