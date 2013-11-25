@@ -14,11 +14,11 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        {{#each menuItems}}
+        {{#if currentUser}}{{#each menuItems}}
         <li class="{{routeClass path}}">
           <a href="{{pathFor name}}">{{t options.title}}</a>
         </li>
-        {{/each}}
+        {{/each}}{{/if}}
       </ul>
       <div class="navbar-right navbar-text login">
         {{loginButtons}} 

@@ -4,8 +4,10 @@
 
 <template name="layout">
   {{>menu}}
-	{{yield}}
+	{{#if currentUser}}
+  {{yield}}
   {{yield 'overlay'}}
+  {{/if}}
 </template>
 
 <template name="notFound">

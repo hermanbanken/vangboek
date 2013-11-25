@@ -162,12 +162,15 @@ Bills.find({}, {field: ['change']}).observeChanges({
 
 if(Meteor.isServer){
 Meteor.publish(null, function () {
+  if(Meteor.userId())
   return [
     Bills.find(),
     Changes.find()
   ];
 });
 Meteor.publish('bill', function(id){
+  if(Meteor.userId())
+  if(Meteor.user)
   return Bills.find({_id: id});
 });
 }

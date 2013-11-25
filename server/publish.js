@@ -1,4 +1,5 @@
 Meteor.publish(null, function () {
+  if(Meteor.userId())
   return [
     Meteor.users.find({}, {fields: {
       'profile': 1,
