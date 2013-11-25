@@ -32,7 +32,7 @@
   });
   
   Handlebars.registerHelper('currency', function(number){
-    return number && number.toFixed(2) || "";
+    return (number || number === 0) && number.toFixed(2) || "";
   });
   
   /* Mimic Meteor's idStringify function */
