@@ -22,12 +22,10 @@ Meteor.startup(function(){
 });
 
 if(Meteor.isClient){
-  /*Template.bill.changes = function(){
-    return Changes.find({
-      billId: Router.current().params._id
-    });
-  }*/
-    
+  Handlebars.registerHelper('allBills', function(){
+    return Bills.find();
+  });
+ 
   Template.bills.userModel = function(){
     return Router.current().template == "user" && Router.current().data();
   }

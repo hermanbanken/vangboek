@@ -1,0 +1,58 @@
+<head>
+  <title>vangboek</title>
+</head>
+
+<template name="layout">
+  {{>menu}}
+	{{yield}}
+  {{yield 'overlay'}}
+</template>
+
+<template name="notFound">
+  <div class="container"><div class="row"><div class="col-md-12">
+    <h1>:( 404</h1>
+  </div></div></div>
+</template>
+
+<template name="home">
+  <div class="container">
+    <div class="row"><div class="col-md-8">
+      <h2>Mutaties <small>nieuw</small></h2>
+      <div class="table-wrap">
+        <table class="table table-striped table-hover">
+          <thead><tr>
+            <th>Datum</th>
+            <th>Type</th>
+            <th>Opmerking</th>
+            <th class='euro-col'>&Delta; Saldo</th>
+          </tr></thead>
+          {{#each allBills}}
+          <tr>
+            <td><a href="{{pathFor 'billShow'}}">{{datef date 'll'}}</a></td>
+            <td>{{type}}</td>
+            <td>{{title}}</td>
+            <td class='euro'>{{currency change}}</td>
+          </tr>
+          {{/each}}
+        </table>
+      </div>
+    </div>
+    <div class="col-md-4">
+        <h2>Standen Maats <small>nieuwe storting</small></h2>
+        <div class="table-wrap">
+            <table class="table table-striped table-hover">
+                <thead><tr>
+                  <th>Maats</th>
+                  <th class='euro-col'>Saldo</th>
+                </tr></thead>
+                {{#each allUsers}}
+                <tr>
+                  <td><a href="{{pathFor 'userShow'}}">{{profile.nickname}}</a></td>
+                  <td class='euro'>{{currency saldo}}</td>
+                </tr>
+                {{/each}}
+            </table>
+        </div>
+    </div></div>
+  </div>
+</template>
