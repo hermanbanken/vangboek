@@ -23,7 +23,7 @@ Meteor.startup(function(){
 
 if(Meteor.isClient){
   Handlebars.registerHelper('allBills', function(){
-    return Bills.find();
+    return Bills.find({}, {sort: [["date", "desc"]]});
   });
  
   Template.bills.userModel = function(){
@@ -142,7 +142,7 @@ Router.map(function(){
     order: 11,
     
     data: function(){
-      return Bills.find({});
+      return Bills.find({}, {sort: [["date", "desc"]]});
     },
   })
   

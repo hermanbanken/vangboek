@@ -70,11 +70,11 @@
   
   Handlebars.registerHelper('eachBranchedBy', function(data, branchKey, options){
     var parentData = this;
-    if (data.fetch) data = data.fetch();
+    if (data && data.fetch) data = data.fetch();
 
     if(typeof branchKey != 'string') {
       options = branchKey;
-      if(typeof data[0] == 'object')
+      if(data && typeof data[0] == 'object')
         branchKey = _.chain(data[0]).pairs().find(function(p){
           return typeof p[1] == 'string';
         }).value()[0] || "name";

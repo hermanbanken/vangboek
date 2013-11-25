@@ -5,7 +5,7 @@ Template.user.model = function(){
 };
 Template.user.bills = function(){
   var ids = Changes.find({userId: this._id}).map(function(c){ return c.billId });
-  return Bills.find({_id: {$in: ids}});
+  return Bills.find({_id: {$in: ids}}, { sort: [["date", "desc"]] });
 }
 
 Template.user.events = {
@@ -46,7 +46,7 @@ Router.map(function(){
 });
 
 Handlebars.registerHelper("allUsers", function(){
-  return Meteor.users.find();
+  return Meteor.users.find({}, {sort: [["profile.year","desc"],"profile.nickname"]});
 });
 
 Handlebars.registerHelper("userCollection", function(){
