@@ -50,7 +50,7 @@
       groupKey = "type";
     }
   
-    if (data.fetch) data = data.fetch();
+    if (data && data.fetch) data = data.fetch();
   
     if (data && data.length > 0)
       return _.chain(data).groupBy(groupKey).map(function(list, groupId) {
