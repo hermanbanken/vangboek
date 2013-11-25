@@ -3,20 +3,20 @@
       <table class="table table-striped table-hover">
           <thead><tr>
             <th>Datum</th>
-            <th>&Delta; Saldo</th>
             <th>Type</th>
             <th>Opmerking</th>
             {{#unless userModel}}<th>{{t 'users'}}</th>{{/unless}}
+            <th>&Delta; Saldo</th>
           </tr></thead>
           <tbody>{{#each this}}
             <tr>
               <td><a href="{{pathFor 'billShow'}}">{{datef date 'll'}}</a></td>
-              <td>{{#if userModel}}{{#currency sumFor userModel}}{{/currency}}{{else}}{{currency change}}{{/if}}</td>
               <td>{{type}}</td>
               <td>{{title}}</td>
               {{#unless userModel}}<td>{{#each users}}
                 {{stringify this.profile.name}}, 
               {{/each}}</td>{{/unless}}
+              <td class='euro'>{{#if userModel}}{{#currency sumFor userModel}}{{/currency}}{{else}}{{currency change}}{{/if}}</td>
             </tr>
             {{else}}
             <tr><td colspan="{{#if ../_id}}4{{else}}5{{/if}}" class=cap>{{t 'no entries yet'}}</tr>

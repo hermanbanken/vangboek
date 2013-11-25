@@ -9,7 +9,7 @@
                 <th>{{t 'realname'}}</th>
                 <th>{{t 'nickname'}}</th>
                 <th>{{t 'email'}}</th>
-                <th>{{t 'roles'}}</th>
+                <th class='euro-col'>{{t 'saldo'}}</th>
               </thead>
               <tbody>{{#each this}}
               <tr class='line-md'>
@@ -17,7 +17,7 @@
                 <td><a href="{{pathFor 'userShow'}}">{{profile.name}}</a></td>
                 <td>{{profile.nickname}}</td>
                 <td>{{userServiceField services "email"}}</td>
-                <td>{{#each roles}}{{this}} {{/each}}</td>
+                <td class='euro'>{{currency saldo}}</td>
               </tr>
               {{/each}}</tbody>
             </table>

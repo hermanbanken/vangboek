@@ -31,6 +31,12 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
 .icon-md { height: @size-md; }
 .icon-lg { height: @size-lg; }
 
+.euro-col { width: 80px; text-align: right; }
+.euro {
+  text-align: right;
+  &:after { content: "\20AC"; padding-left: .3em; float: right }
+}
+
 .block { display: block; }
 
 .changes {
