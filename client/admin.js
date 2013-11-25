@@ -9,6 +9,6 @@ Router.map(function(){
     order: 99
 	});*/
   
-  Router.dep.changed();
+  if(Router.dep) Router.dep.changed();
 
 });
