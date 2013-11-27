@@ -9,6 +9,10 @@ User = function (doc){
 User.prototype = {
   constructor: User,
   
+  picture: function(){
+    return _.chain(this.services).pluck("picture").first().value();
+  },
+  
   saldo: function(){
     return _.reduce(
       Changes.find({userId: this._id}).map(function(doc){ return doc.change }),

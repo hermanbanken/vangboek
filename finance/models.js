@@ -1,5 +1,4 @@
 Bills = new Meteor.Collection("bills", {transform: function(doc){
-  if(doc.note && !doc.title) doc.title = doc.note;
   return new Bill(doc);
 }});
 
@@ -40,6 +39,16 @@ Bill = function (doc){
 
 Bill.prototype = {
   constructor: Bill,
+  
+  getTitle: function(){
+    if(this.title) return this.title;
+    else {
+      if(this.type) 
+        return this.type.charAt(0).toUpperCase() + this.type.slice(1) + 
+          " " + (this.date.getMonth() + 1) + "-" + this.date.getDate();
+      return 'bill';
+    }
+  },
   
   /* Return all splits that are defined either by Changes.type or in the splitTYpes field */
   splits: function(){
@@ -138,6 +147,7 @@ var recalc = function(doc, old){
   var b = Bills.findOne({_id: doc.billId});
   if(b) b.updateComputed(); 
 };
+if(Meteor.isServer){
 Changes.find({computed: true}).observe({
   added: recalc,
   removed: recalc,
@@ -150,7 +160,6 @@ Changes.find({'$or': [{'computed': {'$exists': false}}, {'computed': false}]}).o
   changed: recalc,
   removed: recalc
 });
-if(Meteor.isServer)
 Bills.find({}, {field: ['change']}).observeChanges({
   removed: function(id){
     Changes.remove({billId: id});
@@ -159,17 +168,14 @@ Bills.find({}, {field: ['change']}).observeChanges({
     Bills.findOne({_id: id}).updateComputed();
   }
 });
-
-if(Meteor.isServer){
 Meteor.publish(null, function () {
-  if(Meteor.userId())
+  if(Meteor.user)
   return [
     Bills.find(),
     Changes.find()
   ];
 });
 Meteor.publish('bill', function(id){
-  if(Meteor.userId())
   if(Meteor.user)
   return Bills.find({_id: id});
 });

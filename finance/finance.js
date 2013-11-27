@@ -23,6 +23,7 @@ if(Meteor.isClient){
       } else if(e.target.type == 'submit'){
         e.preventDefault();
         var data = {$set: {
+          title: template.find("#title").value,
           note: template.find("#note").value,
           change: parseInt(template.find("#change").value),
           date: new Date(template.find("#date").value),
@@ -75,16 +76,15 @@ if(Meteor.isClient){
     },
     /* Up count for person on bill type list */
     "up": function(e){
-      this.amount = .5+(this.amount||0);
-      Changes.update({_id: this._id}, {$set: { amount: this.amount }});
+      Changes.update({_id: this._id}, {$set: { amount: .5+(this.amount||0) }});
     },
     /* Down count for person on bill type list, if count = 0 remove */
     "down": function(e){
-      this.amount = (this.amount||0) - .5;
-      Changes.update({_id: this._id}, {$set: { amount: this.amount }});
-      if(this.amount <= 0){
+      if(this.amount <= .5){
         $(e.target).closest("li").next().find("input[type=text]").focus();
-        Changes.remove({_id: this._id});  
+        Changes.remove({_id: this._id});
+      } else {
+        Changes.update({_id: this._id}, {$set: { amount: (this.amount||0) - .5 }});
       }
     },
     "click [data-action]": function(e){

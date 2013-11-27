@@ -35,29 +35,29 @@
 </template>
 
 <template name="bill">
-  <div class="container">
+  <div class="container bill">
     <div class="row"><div class="col-sm-4">
       {{#isolate}}
-      <h2>{{t 'bill'}} {{title}}</h2>
+      <div class="h2"><input name="title" id="title" class="form-control seamless" value="{{t getTitle}}" /></div>
       <form role="form">
         <div class="form-group">
-          <label for="date">Date</label>
+          <label for="date">{{t 'Date'}}</label>
           <input type="date" class="form-control" id="date" placeholder="Datum" value="{{datef date 'YYYY-MM-DD'}}" />
         </div>
         <div class="form-group {{#if hasDifficiency}}has-error{{/if}}">
-          <label for="change">Change</label>
+          <label for="change">{{t 'Change'}}</label>
           <input type="text" class="form-control" id="change" placeholder="Liquidity change" value="{{change}}">
         </div>
         <div class="form-group">
-          <label for="note">Note</label>
+          <label for="note">{{t 'Note'}}</label>
           <textarea id="note" class="form-control" name="note" rows="3">{{note}}</textarea>
         </div>
         <div class="form-group">
-          <label for="type">Type</label>
+          <label for="type">{{t 'Type'}}</label>
           <input type="text" class="form-control" id="type" placeholder="Type" value="{{type}}">
         </div>
-        <button type="submit" class="btn btn-default">Save</button>
-        <a data-action='remove' class="btn btn-danger pull-right">Delete</a>
+        <button type="submit" class="btn btn-default">{{t 'Save'}}</button>
+        <a data-action='remove' class="btn btn-danger pull-right">{{t 'Delete'}}</a>
       </form>
     {{/isolate}}
     </div><div class="col-sm-8">
@@ -100,22 +100,3 @@
   <input type="hidden" name="change[{{_id}}].note" value="{{note}}" />
   <input type="text" name="change[{{_id}}].change" value="{{currency change}}" {{#if computed}}readonly="true"{{/if}} />       
 </template>
-
-<!-- {{!--<h2>Users</h2>
-      {{#each allUsers}}
-        <div class='user'>
-          <img src="{{userServiceField services 'picture'}}" class='icon-lg img-circle'>
-          {{#each changesFor this}}
-          <input type="text" name="users[{{../_id}}][].change" value="{{change}}" />
-          <input type="text" name="users[{{../_id}}][].note" value="{{note}}" />
-          {{/each}}
-          <div>{{_id}} - {{profile.name}} - {{selected}} - {{context}}</div>
-        </div>
-      {{/each}}
-      --}}
-  
-      {{#each users}}
-       <span>{{userId}} - {{change}}</span><br>
-      {{else}}
-      No users yet
-      {{/each}} -->

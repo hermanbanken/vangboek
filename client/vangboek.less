@@ -39,7 +39,25 @@ h1, h2, h3, h4, h5, h6, p, th, .navbar li a, .cap {
   &:after { content: "\20AC"; padding-left: .3em; float: right }
 }
 
+.seamless {
+  color: inherit;
+  display: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  border-width: 0;
+  height: inherit;
+  width: inherit;
+  box-shadow: none;
+  padding: inherit;
+  &:hover, &:focus {
+    margin: -1px;
+    border-width: 1px;
+  }
+}
+
 .block { display: block; }
+
+.bill .h2 { margin-top: 20px; margin-bottom: 10px; }
 
 .changes {
   list-style: none;

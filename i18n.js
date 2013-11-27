@@ -16,6 +16,12 @@ var translations = {
   "no entries yet": { nl: 'nog geen data', oc: 'nog geen data' },
   "computed": { nl: 'berekend', oc: 'HO' },
   "static": { nl: 'statisch', oc: 'persoonlijk' },
+  "Date": { nl: 'Datum', oc: 'Datum' },
+  "Change": { nl: 'Saldo verandering', oc: 'Saldo verandering' },
+  "Note": { nl: 'Opmerking', oc: 'Opmerking' },
+  "Type": { nl: 'Type', oc: 'Type' },
+  "Save": { nl: 'Opslaan', oc: 'Opslaan' },
+  "Delete": { nl: 'Verwijder', oc: 'Verwijder' },
 };
 
 if(Meteor.isServer)
