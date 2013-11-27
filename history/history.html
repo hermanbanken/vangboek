@@ -1,0 +1,17 @@
+<template name="history">
+  <div class="container">
+    <div class="row"><div class="col-sm-7">
+      <h2 class='history-h'>{{t 'history'}}</h2>
+      <div class="history-wrap">
+        {{#each this}}<div class='history {{type}}'>
+          <div class="pull-left user-icon mrm"><img class="icon-md " src="{{userServiceField user.services 'picture' 'http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536'}}" /></div>
+          <div>
+            <div class="tagline">Someone did someting in {{collection}}
+              <small class="pull-right">{{datef date 'LL'}}</small></div>
+            <div class="body">{{stringify doc}}</div>
+          </div>
+        </div>{{/each}}
+      </div>
+    </div><div class="col-sm-5">Other</div></div>
+  </div>
+</template>

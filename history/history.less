@@ -1,0 +1,49 @@
+.history-h {
+  padding-left: 90px;
+  &:before {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    height: 10000px;
+    background: #d0d0d0;
+    content: "";
+    margin-left: -31px;
+  }
+}
+
+.history-wrap {
+  .history {
+    position: relative;
+    padding: 30px 20px 30px 90px;
+    
+    &.inserted:before {
+      content: "\002b";
+      background: #424242;
+    }
+    
+    &:before {
+      content: '?';
+      color: #fff;
+      font-size: 12px;
+      text-shadow: none;
+      font-family: 'Fontello';
+      text-align: center;
+      line-height: 22px;
+      background: #ccc;
+      width: 22px;
+      height: 22px;
+      position: absolute;
+      top: 28px;
+      left: 50px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+    }
+    
+    .icon-md {
+      position: absolute;
+      left: 0px;
+      top: 23px;
+    }
+  }
+}
