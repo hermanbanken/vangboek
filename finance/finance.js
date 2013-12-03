@@ -54,7 +54,7 @@ if(Meteor.isClient){
             data = {};
         data[type] = parseFloat(template.find("#payMethod-"+type).value);
         data[other] = ~~((this.change - data[type])*100) / 100;
-        console.log(data);
+        template.find("#payMethod-"+other).value = data[other];
         Bills.update({_id: this._id}, {$set: {
           'payMethod': _.extend(this.payMethod, data) 
         }});
