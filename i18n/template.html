@@ -1,0 +1,25 @@
+<template name="translations">
+  <div class="container i18n">
+    <div class="row"><div class="col-sm-12">
+        <h2>{{t 'translations'}}</h2>
+        <div class="table-wrap">
+            <table class="table table-striped table-hover">
+              <thead>
+                <th>{{t 'key'}}</th>
+                {{#each languages}}
+                  <th>{{this}}</th>
+                {{/each}}
+              </thead>
+              <tbody>{{#each translations}}
+              <tr>
+                <td>{{key}}</td>
+                {{#each keyMapped this ../languages}}
+                  <td><input class="seamless" name="{{../key}}[{{key}}]" value="{{value}}"/></td>
+                {{/each}}
+              </tr>
+              {{/each}}</tbody>
+            </table>
+        </div>
+    </div>
+  </div>
+</template>
