@@ -12,9 +12,17 @@ if(Meteor.isClient){
     return Meteor.users.find({_id: {$in: ids }});
   }
   
+  Template.bill.payMethodText = function(){
+    return this.payMethod && this.payMethod.name || "not payed";
+  };
+  Template.bill.hasMixedPayment = function(){
+    return this.payMethod && "mixed" === this.payMethod.name
+  };
+      
   Template.bill.events = {
-    "click .btn": function(e, template){
+    "click": function(e, template){
       if($(e.target).attr("data-action") == 'remove'){
+        e.preventDefault();
         var a = window.confirm("Sure?");
         if(a){
           Bills.remove({_id: this._id});
@@ -25,14 +33,34 @@ if(Meteor.isClient){
         var data = {$set: {
           title: template.find("#title").value,
           note: template.find("#note").value,
-          change: parseInt(template.find("#change").value),
+          change: parseFloat(template.find("#change").value),
           date: new Date(template.find("#date").value),
           type: template.find("#type").value,
           created: this.created || new Date()
         }};
         Bills.update({_id: this._id}, data);
+      } else if($(e.target).attr("data-action") == 'change-pay-method'){
+        e.preventDefault();
+        Bills.update({_id: this._id}, {$set: {
+          'payMethod': { name: $(e.target).attr("data-pay-method") }
+        }});
       }
     },
+    
+    "change": function(e, template){
+      if(e.target.name.indexOf("payMethod") == 0 && this.payMethod && "mixed" === this.payMethod.name){
+        var type = e.target.name.slice("payMethod.".length),
+            other = type == 'cash' ? 'account' : 'cash',
+            data = {};
+        data[type] = parseFloat(template.find("#payMethod-"+type).value);
+        data[other] = ~~((this.change - data[type])*100) / 100;
+        console.log(data);
+        Bills.update({_id: this._id}, {$set: {
+          'payMethod': _.extend(this.payMethod, data) 
+        }});
+        e.preventDefault();
+      }
+    }
   };
   
   Template.changeslist.events = {
